@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/user" uri="user.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl" uri="acl.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/log" uri="log.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/osplatform" uri="osplatform.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui" uri="oui.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic" uri="nic.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware" uri="hardware.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/host" uri="host.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/process" uri="process.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet" uri="dns.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem" uri="dhcp.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://github.com/Rburkett/icas-ontology/edit/master/ontology/authentication" uri="user.ttl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
+</catalog>

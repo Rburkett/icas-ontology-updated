@@ -1,0 +1,80 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/datastream#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/datastream>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes data in motion, especially in regards to network connections."@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes data in motion, especially in regards to network connections."@en ;
+    rdfs:label "Data Stream Ontology"@en ;
+    owl:versionInfo "1.0" .
+
+:Action
+    a owl:Class ;
+    rdfs:comment "An generic action within a a datastream"@en ;
+    rdfs:label "Action"@en ;
+    rdfs:subClassOf event:Event .
+
+:Command
+    a owl:Class ;
+    rdfs:comment "A command to launch an action, within an a datastream"@en ;
+    rdfs:label "Command"@en ;
+    rdfs:subClassOf event:Event .
+
+:Content
+    a owl:Class ;
+    rdfs:comment "Content Data within a datastream - not typically a command or executable in any way"@en ;
+    rdfs:label "Content"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:Packet
+    a owl:Class ;
+    rdfs:comment "An Individual Data Packet within a datastream protocol"@en ;
+    rdfs:label "Packet"@en ;
+    rdfs:subClassOf mere:Atom, owl:Thing .
+
+:Request
+    a owl:Class ;
+    rdfs:comment "A Request from one endpoint to another within a datastream"@en ;
+    rdfs:label "Request"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:Response
+    a owl:Class ;
+    rdfs:comment "A Response to a Request from one endpoint to another within a datastream"@en ;
+    rdfs:label "Response"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:Stream
+    a owl:Class ;
+    rdfs:comment "A Response to a Request from one endpoint to another within a datastream"@en ;
+    rdfs:label "Data Stream"@en ;
+    rdfs:subClassOf event:Event, mere:Composite .
+
+:hasSequence
+    a owl:DatatypeProperty ;
+    rdfs:comment "the sequence number of the packet within the stream"@en ;
+    rdfs:domain :Packet ;
+    rdfs:label "has sequence number"@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+:hasSize
+    a owl:DatatypeProperty ;
+    rdfs:comment "the total size, in bytes, of the data stream"@en ;
+    rdfs:domain :Packet ;
+    rdfs:label "has total size"@en ;
+    rdfs:range xsd:nonNegativeInteger .
+

@@ -1,0 +1,119 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix nic: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic#> .
+@prefix oui: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix ipnet: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#> .
+@prefix hardware: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix osplatform: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/osplatform#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/host>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes discrete computing Hosts"@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes discrete computing Hosts"@en ;
+    rdfs:label "Computing Host Ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/osplatform>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user> ;
+    owl:versionInfo "1.0" .
+
+:Host
+    a owl:Class ;
+    rdfs:comment "A single host, as an abstract concept. Hosts are the intersection between hardware (physical or virtual), an instance of an operating system and associated software.  Can also be though of as a code execution compartment - a kernel with associated single process table."@en ;
+    rdfs:label "Host"@en .
+
+:IPenabledDevice
+    a owl:Class ;
+    rdfs:comment "A TCP/IP Connected Device that does not fall into the idea of a general computing machine"@en ;
+    rdfs:label "IP Enabled Device"@en ;
+    rdfs:subClassOf :Host .
+
+:Infrastructure
+    a owl:Class ;
+    rdfs:comment "A Host that is a critical piece of the surrounding infrastructure - typically a router, switch or other connectivity device"@en ;
+    rdfs:label "Infrastructure Host"@en ;
+    rdfs:subClassOf :Host .
+
+:Mobile
+    a owl:Class ;
+    rdfs:comment "A Physically mobile device that is expected to move from network to networ with some regularity"@en ;
+    rdfs:label "Mobile Host"@en ;
+    rdfs:subClassOf :Host .
+
+:Server
+    a owl:Class ;
+    rdfs:comment "A Host that is expected to be at a predictable location or address, providing network services to a number of client hosts"@en ;
+    rdfs:label "Server Host"@en ;
+    rdfs:subClassOf :Host .
+
+:UsedByUser
+    a owl:ObjectProperty ;
+    rdfs:comment "authenticated activity from this user has been observed on this host."@en ;
+    rdfs:domain :Host ;
+    rdfs:label "is used by"@en ;
+    rdfs:range user:UserAccount .
+
+:Workstation
+    a owl:Class ;
+    rdfs:comment "A machine intended to be used locally, by a single primary user, from a fixed location and network"@en ;
+    rdfs:label "Workstation Host"@en ;
+    rdfs:subClassOf :Host .
+
+:existsAs
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the physical or virtual hardware underlying the operating system of this host"@en ;
+    rdfs:domain :Host ;
+    rdfs:label "exists as device"@en ;
+    rdfs:range hardware:ComputingMachine .
+
+:hasAgent
+    tapio:signaturePriority 1 ;
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Host ;
+    rdfs:label "has TAPIO Agent"@en ;
+    rdfs:range tapio:Agent .
+
+:hasFileSystemRoot
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "a root (top-level) Directory from while the system may access file resources by names relative to"@en ;
+    rdfs:domain :Host ;
+    rdfs:label "has a filesystem root at"@en ;
+    rdfs:range filesystem:Directory ;
+    owl:inverseOf filesystem:isFilesystemRootOn .
+
+:hasNIC
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this host is bonded to a network interface. Hosts may have many network interfaces, and many hosts may utilize a NIC in some abstracted way, but only a single host can have direct (driver-level control) of the device."@en ;
+    rdfs:domain :Host ;
+    rdfs:label "has network interface"@en ;
+    rdfs:range nic:NIC ;
+    owl:inverseOf nic:onHost .
+
+:hasProcessList
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Host ;
+    rdfs:label "has Process List"@en ;
+    rdfs:range process:ProcessList ;
+    owl:inverseOf process:onHost .
+
+:hostName
+    tapio:signaturePriority 4 ;
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the internal hostname this system refers to itself as. May differ from other name-based systems (such as DNS)."@en ;
+    rdfs:domain :Host ;
+    rdfs:label "has host name"@en ;
+    rdfs:range xsd:string .
+

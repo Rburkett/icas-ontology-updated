@@ -1,0 +1,131 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystemartifacts#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystemartifacts>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes elements extracted from a filesystem and the contents therein"@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes elements extracted from a filesystem and the contents therein"@en ;
+    rdfs:label "Filesystem Forensic Artifacts Ontology"@en ;
+    owl:versionInfo "1.0" .
+
+:ActivityRecord
+    a owl:Class ;
+    rdfs:comment "a record of activity of software on the system, usually user-driven acctions"@en ;
+    rdfs:label "Activity Record"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:AsciiContentFragment
+    a owl:Class ;
+    rdfs:label "ASCII Content Fragment"@en ;
+    rdfs:subClassOf :PlaintextContentFragment .
+
+:BinaryContentFragment
+    a owl:Class ;
+    rdfs:label "Binary File Content Fragment"@en ;
+    rdfs:subClassOf :FileContentFragment .
+
+:BrowserHistory
+    a owl:Class ;
+    rdfs:comment "a record of URI Locations visited"@en ;
+    rdfs:label "Browser History"@en ;
+    rdfs:subClassOf :ActivityRecord .
+
+:DirectoryMetaData
+    a owl:Class ;
+    rdfs:label "Directory Meta Data"@en ;
+    rdfs:subClassOf :MetaData .
+
+:FileContentFragment
+    a owl:Class ;
+    rdfs:label "File Content Fragment"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:FileMetaData
+    a owl:Class ;
+    rdfs:label "File Meta Data"@en ;
+    rdfs:subClassOf :MetaData .
+
+:FilesystemMetaData
+    a owl:Class ;
+    rdfs:label "Filesystem Meta Data"@en ;
+    rdfs:subClassOf :MetaData .
+
+:MRU
+    a owl:Class ;
+    rdfs:comment "a record of recent Data Files accessed by an application"@en ;
+    rdfs:label "Most Recently Used List"@en ;
+    rdfs:subClassOf :ActivityRecord .
+
+:MetaData
+    a owl:Class ;
+    rdfs:label "Metadata"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:PlaintextContentFragment
+    a owl:Class ;
+    rdfs:label "Plaintext Content Fragment"@en ;
+    rdfs:subClassOf :FileContentFragment .
+
+:UnicodeContentFragment
+    a owl:Class ;
+    rdfs:label "Unicode Content Fragment"@en ;
+    rdfs:subClassOf :PlaintextContentFragment .
+
+:containsActivity
+    a owl:ObjectProperty ;
+    rdfs:comment "Indicates that the linked element was initially discovered within the contents of this activity record"@en ;
+    rdfs:domain :ActivityRecord ;
+    rdfs:label "Contains Activity"@en ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf mere:hasPart ;
+    owl:inverseOf :discoveredIn .
+
+:containsArtifact
+    a owl:ObjectProperty ;
+    rdfs:comment "describes the content of a file in terms of other TAPIO elements"@en ;
+    rdfs:domain filesystem:Directory, filesystem:File ;
+    rdfs:label "Contains Artifact"@en ;
+    rdfs:range :ActivityRecord, :FileContentFragment ;
+    rdfs:subPropertyOf mere:hasPart ;
+    owl:inverseOf :extractedFrom .
+
+:discoveredIn
+    a owl:ObjectProperty ;
+    rdfs:comment "This element was not observed directly, but extracted from the contents of a file"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:label "Discovered in" ;
+    rdfs:range :ActivityRecord ;
+    rdfs:subPropertyOf mere:partOf ;
+    owl:inverseOf :containsActivity .
+
+:extractedFrom
+    a owl:ObjectProperty ;
+    rdfs:comment "This artifact was extracted from the following file(s) or directory"@en ;
+    rdfs:domain :ActivityRecord, :FileContentFragment ;
+    rdfs:label "Extracted from"@en ;
+    rdfs:range filesystem:Directory, filesystem:File ;
+    rdfs:subPropertyOf mere:partOf ;
+    owl:inverseOf :containsArtifact .
+
+:hasContent
+    a owl:DatatypeProperty ;
+    rdfs:comment "the actual content of the fragment"@en ;
+    rdfs:domain :FileContentFragment ;
+    rdfs:label "has content"@en ;
+    rdfs:range xsd:hexBinary, xsd:string .
+

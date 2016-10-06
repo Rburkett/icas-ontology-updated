@@ -1,0 +1,27 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix uri: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri-inferred#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri-inferred>
+    a owl:Ontology ;
+    rdfs:comment "This ontology contains additional predicates to the URI ontology, intended to be computationally inferred via an OWL reasoner"@en ;
+    rdfs:label "Unifirm Resource Identifier Ontology - Inferred Axioms"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri> ;
+    owl:versionInfo "1.0"@en .
+
+:MaliciousContentURI
+    a owl:Class ;
+    rdfs:comment "The content served from this URI is designed to actively compromise client applications retrieving and rendering it."@en ;
+    rdfs:label "Malicious Content URI"@en ;
+    rdfs:subClassOf uri:URI .
+
