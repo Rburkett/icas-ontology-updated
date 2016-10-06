@@ -1,0 +1,219 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix authentication: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/authentication#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix host: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/user>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes Identity roles within software system."@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes Identity roles within software system."@en ;
+    rdfs:label "User and Group account Ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/authentication>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process> ;
+    owl:versionInfo "1.0" .
+
+:GID
+    a rdfs:Datatype ;
+    rdfs:label "Group ID Number"@en ;
+    rdfs:range xsd:string .
+
+:Group
+    a owl:Class ;
+    rdfs:comment "a collection of accounts for the purposes of shared access rights."@en ;
+    rdfs:label "Group"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing ;
+    owl:disjointWith :UserAccount .
+
+:GroupCreatedEvent
+    a owl:Class ;
+    rdfs:comment "An event by which a group is created."@en ;
+    rdfs:label "Group creation event"@en ;
+    rdfs:subClassOf event:Event .
+
+:LDAP
+    a owl:Class ;
+    rdfs:label "LDAP Authentication Realm"@en ;
+    rdfs:subClassOf :Realm .
+
+:Realm
+    a owl:Class ;
+    rdfs:comment "An authentication domain (or realm) is a super-context to accounts and groups, which must be unique within the auth domain."@en ;
+    rdfs:label "Authentication Domain"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:RealmCreatedEvent
+    a owl:Class ;
+    rdfs:comment "An event by which a realm is created."@en ;
+    rdfs:label "Realm creation event"@en ;
+    rdfs:subClassOf event:Event .
+
+:UID
+    tapio:signaturePriority 2 ;
+    a rdfs:Datatype ;
+    rdfs:label "User ID Number"@en ;
+    rdfs:range xsd:normalizedString .
+
+:UserAccount
+    a owl:Class ;
+    rdfs:comment "an individual set of credentials."@en ;
+    rdfs:label "User"@en ;
+    rdfs:subClassOf owl:Thing ;
+    owl:disjointWith :Group .
+
+:UserAccountCreatedEvent
+    a owl:Class ;
+    rdfs:comment "An event by which a user account is created."@en ;
+    rdfs:label "User account creation event"@en ;
+    rdfs:subClassOf event:Event .
+
+:appearsOnHost
+    tapio:signaturePriority 3 ;
+    a owl:ObjectProperty ;
+    rdfs:domain :Group ;
+    rdfs:label "Group is defined on this host"@en ;
+    rdfs:range host:Host .
+
+:assignedToPerson
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the person the account is assigned to."@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "is owned by"@en .
+
+:createdAccount
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this account was used when creating the linked account"@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "created account"@en ;
+    rdfs:range :UserAccount ;
+    owl:inverseOf :createdBy .
+
+:createdBy
+    a owl:FunctionalProperty, owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the account that created this account/group."@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "created by"@en ;
+    rdfs:range :Group, :UserAccount .
+
+:groupCreated
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "linking to the event by which this realm was created"@en ;
+    rdfs:domain :Group ;
+    rdfs:label "was created by"@en ;
+    rdfs:range :GroupCreatedEvent ;
+    rdfs:subPropertyOf event:produced_in .
+
+:groupName
+    a rdfs:Datatype ;
+    rdfs:label "Group Name String"@en .
+
+:hasFullName
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "and extended name or description, used only for display purposes"@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "has full name"@en ;
+    rdfs:range xsd:string .
+
+:hasGID
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Group ;
+    rdfs:label "has group ID"@en ;
+    rdfs:range :GID .
+
+:hasGroupName
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Group ;
+    rdfs:label "has group name"@en ;
+    rdfs:range :groupName .
+
+:hasMember
+    a owl:ObjectProperty ;
+    rdfs:domain :Group ;
+    rdfs:label "has member"@en ;
+    rdfs:range :UserAccount ;
+    rdfs:subPropertyOf mere:hasPart ;
+    owl:inverseOf :memberOfGroup .
+
+:hasName
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the human-readable system identifier for this account, group or realm"@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "has login name"@en ;
+    rdfs:range :userName .
+
+:hasRealmName
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Realm ;
+    rdfs:label "has realm name"@en ;
+    rdfs:range :realmName .
+
+:hasUID
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "has user ID"@en ;
+    rdfs:range :UID .
+
+:homeDir
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "an account's home directory is usually the storage point for any user specific configuration data and the default location for storing user generated content"@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "has home directory"@en ;
+    rdfs:range filesystem:Directory .
+
+:memberOfGroup
+    a owl:ObjectProperty ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "is member of Group"@en ;
+    rdfs:range :Group ;
+    rdfs:subPropertyOf mere:partOf .
+
+:memberOfRealm
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "authentication domains provide 'namespaces' for accounts and groups, they must be unique within the domain, but also act as the same identity within all systems that use the authentication domain"@en ;
+    rdfs:domain :Group, :UserAccount ;
+    rdfs:label "is member of authentication domain"@en ;
+    rdfs:range :Realm .
+
+:passwordHash
+    a rdfs:Datatype ;
+    rdfs:label "Pssword Hash String"@en .
+
+:realmCreated
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "linking to the event by which this realm was created"@en ;
+    rdfs:domain :Realm ;
+    rdfs:label "was created by"@en ;
+    rdfs:range :RealmCreatedEvent ;
+    rdfs:subPropertyOf event:produced_in .
+
+:realmName
+    a rdfs:Datatype ;
+    rdfs:label "Realm Name String"@en .
+
+:userAcctCreated
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "linking to the event by which this user account was created"@en ;
+    rdfs:domain :UserAccount ;
+    rdfs:label "was created by"@en ;
+    rdfs:range :UserAccountCreatedEvent ;
+    rdfs:subPropertyOf event:produced_in .
+
+:userName
+    tapio:signaturePriority 1 ;
+    a rdfs:Datatype ;
+    rdfs:label "User Name String"@en .
+

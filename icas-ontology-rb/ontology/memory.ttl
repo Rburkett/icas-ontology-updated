@@ -1,0 +1,138 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix nic: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic#> .
+@prefix oui: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui#> .
+@prefix log: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/log#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix ipnet: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#> .
+@prefix hardware: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware#> .
+@prefix mime: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix host: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/memory#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/memory>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes high level organization and addressing of objects within Random Access Memory"@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes high level organization and addressing of objects within Random Access Memory"@en ;
+    rdfs:label "An ontology for mapping regions of Memory Objects into their functional purposes."@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process> ;
+    owl:versionInfo "1.0" .
+
+:Code
+    a owl:Class ;
+    rdfs:comment "An area of system memory assigned for executable code"@en ;
+    rdfs:label "Region of Memory"@en ;
+    rdfs:subClassOf :MemoryBlock .
+
+:Data
+    a owl:Class ;
+    rdfs:comment "An area of system memory assigned for non-executable data"@en ;
+    rdfs:label "Data Region of Memory"@en ;
+    rdfs:subClassOf :MemoryBlock .
+
+:MemoryAddressPhy32
+    a rdfs:Datatype ;
+    rdfs:comment "A 32bit address, relative to the host system's entire memory space"@en ;
+    rdfs:label "32-Bit Physical Memory Address"@en ;
+    owl:equivalentClass xsd:unsignedInt .
+
+:MemoryAddressPhy64
+    a rdfs:Datatype ;
+    rdfs:comment "A 64bit address, relative to the host system's entire memory space"@en ;
+    rdfs:label "64-Bit Physical Memory Address"@en ;
+    owl:equivalentClass xsd:unsignedInt .
+
+:MemoryAddressVirt32
+    a rdfs:Datatype ;
+    rdfs:comment "A 32bit address, relative to the host system's entire memory space"@en ;
+    rdfs:label "32-Bit Virtual Memory Address"@en ;
+    owl:equivalentClass xsd:unsignedInt .
+
+:MemoryAddressVirt64
+    a rdfs:Datatype ;
+    rdfs:comment "A 64bit address, relative to the host system's entire memory space"@en ;
+    rdfs:label "64-Bit Virtual Memory Address"@en ;
+    owl:equivalentClass xsd:unsignedLong .
+
+:MemoryBlock
+    a owl:Class ;
+    rdfs:comment "An area of system memory, contiguous between a start and end address"@en ;
+    rdfs:label "Region of Memory"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:MetaCode
+    a owl:Class ;
+    rdfs:comment "An area of system memory assigned for execution-tracking items, such as the Heap and Stack"@en ;
+    rdfs:label "MetaCode Region of Memory"@en ;
+    rdfs:subClassOf :Code .
+
+:MetaData
+    a owl:Class ;
+    rdfs:comment "An area of system memory assigned for data-tracking items, such as item index pointers"@en ;
+    rdfs:label "MetaData Region of Memory"@en ;
+    rdfs:subClassOf :Data .
+
+:beginsAtAddress
+    tapio:signaturePriority 1 ;
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "Begins at Address"@en ;
+    rdfs:range :MemoryAddressPhy32, :MemoryAddressPhy64, :MemoryAddressVirt32, :MemoryAddressVirt64 .
+
+:endsAtAddress
+    tapio:signaturePriority 2 ;
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "Ends at Address"@en ;
+    rdfs:range :MemoryAddressPhy32, :MemoryAddressPhy64, :MemoryAddressVirt32, :MemoryAddressVirt64 .
+
+:hasMemoryBlock
+    a owl:ObjectProperty ;
+    rdfs:comment "This process owns the identified block of memory"@en ;
+    rdfs:domain process:Process ;
+    rdfs:label "contains memory region"@en ;
+    rdfs:range :MemoryBlock ;
+    owl:inverseOf :isOwnedByProcess .
+
+:hasSize
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "Has total size"@en ;
+    rdfs:range xsd:positiveInteger .
+
+:isOwnedByProcess
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the executing process that owns this region of memory"@en ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "is owned by process"@en ;
+    rdfs:range process:Process ;
+    owl:inverseOf :hasMemoryBlock .
+
+:mappedFromFile
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the contents of this memory block were drawn from this file."@en ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "is loaded from contents of file"@en ;
+    rdfs:range filesystem:File .
+
+:sharesVirtualMemorySpace
+    a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain :MemoryBlock ;
+    rdfs:label "shares virtual memory space with"@en ;
+    rdfs:range :MemoryBlock .
+

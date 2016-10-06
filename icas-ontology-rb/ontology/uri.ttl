@@ -1,0 +1,87 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mime: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix ipnet: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#> .
+@prefix host: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Ontology describing the structure and nature of URI sequences"@en ;
+    a owl:Ontology ;
+    rdfs:comment "Ontology describing the structure and nature of URI sequences."@en ;
+    rdfs:label "URI ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime> ;
+    owl:versionInfo "1.0" .
+
+:CURIE
+    a owl:Class ;
+    rdfs:label "Compact URI"@en ;
+    rdfs:subClassOf :URI .
+
+:IRI
+    a owl:Class ;
+    rdfs:label "Internationalized Resource Indicator"@en ;
+    rdfs:subClassOf :URI .
+
+:OverProtocol
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The specific layer7 application protocol this URI references in the left-most portion."@en ;
+    rdfs:domain :URL ;
+    rdfs:label "uses application protocol"@en ;
+    rdfs:range ipnet:Layer7 .
+
+:URI
+    a owl:Class ;
+    rdfs:label "Uniformation Resource Indicator"@en .
+
+:URL
+    a owl:Class ;
+    rdfs:label "Uniform Resource Location"@en ;
+    rdfs:subClassOf :URI .
+
+:URN
+    a owl:Class ;
+    rdfs:label "Uniform Resource Name"@en ;
+    rdfs:subClassOf :URI .
+
+:containsURI
+    a owl:ObjectProperty ;
+    rdfs:comment "the connection contained a URI request within it."@en ;
+    rdfs:domain ipnet:Connection ;
+    rdfs:label "accessed URI"@en ;
+    rdfs:range :URI .
+
+:location
+    tapio:signaturePriority 1 ;
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The complete absolute location for this URI"@en ;
+    rdfs:domain :URI ;
+    rdfs:label "Complete URI Location"@en ;
+    rdfs:range xsd:anyURI .
+
+:servedFrom
+    a owl:ObjectProperty ;
+    rdfs:comment "the specific IP or Host the URI connects to"@en ;
+    rdfs:domain :URI ;
+    rdfs:label "was served from"@en ;
+    rdfs:range host:Host, ipnet:Address .
+
+:usesMIMEtype
+    a owl:ObjectProperty ;
+    rdfs:comment "the referenced UI presents content with the attached MIME type, to instruct the client how to parse the content."@en ;
+    rdfs:domain :URI ;
+    rdfs:label "contains data of type"@en ;
+    rdfs:range mime:MIMEtype .
+

@@ -1,0 +1,220 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "an ontology of common access control settings."@en ;
+    a owl:Ontology ;
+    rdfs:comment "an ontology of common access control settings."@en ;
+    rdfs:label "Access Control List ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user> ;
+    owl:versionInfo "1.0" .
+
+:ACL
+    a owl:Class ;
+    rdfs:comment "A list of Access Control Entries, describing the rights to a resource to specific identities and identify groups."@en ;
+    rdfs:label "Access Control List"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:ACLEntry
+    a owl:Class ;
+    rdfs:comment "Access Control Lists are lists of Access Control Entries. This is a single entry, usually specifying a particular account or role's access, to the resources governed by the Access Control List it is contained in."@en ;
+    rdfs:label "ACL Entry"@en ;
+    rdfs:subClassOf mere:Atom, owl:Thing .
+
+:AllGroups
+    a :default, owl:NamedIndividual ;
+    rdfs:comment "A Default Entry indicating global defaults" ;
+    rdfs:label "All Groups" .
+
+:AllUsers
+    a :default, owl:NamedIndividual ;
+    rdfs:comment "A Default Entry indicating global defaults" ;
+    rdfs:label "All Users" .
+
+:DefaultEntry
+    a owl:Class ;
+    rdfs:comment "The default permissions granted by this ACL to any entity not explicity listed"@en ;
+    rdfs:label "Default Permissions Entry"@en ;
+    rdfs:subClassOf :ACLEntry .
+
+:Everyone
+    a :default, owl:NamedIndividual ;
+    rdfs:comment "A Default Entry indicating global defaults" ;
+    rdfs:label "Everyone" .
+
+:FilesystemACL
+    a owl:Class ;
+    rdfs:comment "An access control list specifying CRUDE rights to files and directories"@en ;
+    rdfs:label "File System Access Control List"@en ;
+    rdfs:subClassOf :ACL .
+
+:NetworkACL
+    a owl:Class ;
+    rdfs:comment "An access control list specifying allowable connection types between network segments"@en ;
+    rdfs:label "Network Access Control List"@en ;
+    rdfs:subClassOf :ACL .
+
+:NtfsACL
+    a owl:Class ;
+    rdfs:comment "An access control list for an NTFS Filesystem"@en ;
+    rdfs:label "NTFS Filesystem ACL"@en ;
+    rdfs:subClassOf :FilesystemACL .
+
+:PosixACL
+    a owl:Class ;
+    rdfs:comment "An access list in the owner-group-world POSIX standard style"@en ;
+    rdfs:label "POSIX style Filesystem ACL"@en ;
+    rdfs:subClassOf :FilesystemACL .
+
+:controlsAccessTo
+    a owl:ObjectProperty ;
+    rdfs:comment "This Access Control list contains the rules that grant (or deny) permissions to the listed resource, to the listed roles"@en ;
+    rdfs:domain :ACL ;
+    rdfs:label "governs access to"@en ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf :hasACL .
+
+:default
+    a owl:Class ;
+    rdfs:comment "Used only to indicate that an ACL Entry represents default permissions issued globally" ;
+    rdfs:label "An ACL Default"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:deniesExecuteTo
+    a owl:ObjectProperty ;
+    rdfs:comment "even if some other ACL would indirectly grant execution rights to this user or group, this ACL entry overrides that and explicitly forbids execution."@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "denies execution by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:deniesReadTo
+    a owl:ObjectProperty ;
+    rdfs:comment "even if some other ACL would indirectly grant read rights to this user or group, this ACL entry overrides that and explicitly forbids reading."@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "denies read by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:deniesWriteTo
+    a owl:ObjectProperty ;
+    rdfs:comment "even if some other ACL would indirectly grant write rights to this user or group, this ACL entry overrides that and explicitly forbids writing."@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "explicitly denies write by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:grantsExecuteTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to execute the file in-memory. When Applied to a Directory, grants Traversal rights into the Directory"@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "grants execution by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:grantsReadTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to access the content of the file. When Applied to a Directory, grants content listing rights into the directory"@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "grants reading by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:grantsWriteTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to modify the content of the file. When Applied to a Directory, grants new file or directory creation rights into the directory"@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "grants writing by"@en ;
+    rdfs:range :default, user:Group, user:UserAccount .
+
+:hasACL
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this resource has an Access Control List governing account, group, role or location-specific access restrictions and capabilities."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:label "has Access Control List"@en ;
+    rdfs:range :ACL ;
+    owl:inverseOf :controlsAccessTo .
+
+:hasDefault
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The Default entry in an ACL when no other entry can be applied to the resource requester"@en ;
+    rdfs:domain :ACL ;
+    rdfs:label "has Default Entry"@en ;
+    rdfs:range :DefaultEntry ;
+    rdfs:subPropertyOf :hasEntry .
+
+:hasEntry
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the ACL has the following entry that defines access to a particular role"@en ;
+    rdfs:domain :ACL ;
+    rdfs:label "has ACL entry"@en ;
+    rdfs:range :ACLEntry ;
+    rdfs:subPropertyOf mere:hasPart ;
+    owl:inverseOf :isEntryIn .
+
+:hasExecuteAccessTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to execute the file in-memory. When Applied to a Directory, grants Traversal rights into the Directory"@en ;
+    rdfs:domain :default, user:Group, user:UserAccount ;
+    rdfs:label "grants execution by"@en ;
+    rdfs:range :ACLEntry ;
+    owl:inverseOf :grantsExecuteTo .
+
+:hasOrder
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The Access Control entry's position within the Access Control List"@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "is at position number"@en ;
+    rdfs:range xsd:integer .
+
+:hasReadAccessTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to execute the file in-memory. When Applied to a Directory, grants Traversal rights into the Directory"@en ;
+    rdfs:domain :default, user:Group, user:UserAccount ;
+    rdfs:label "grants execution by"@en ;
+    rdfs:range :ACLEntry ;
+    owl:inverseOf :grantsReadTo .
+
+:hasWriteAccessTo
+    a owl:ObjectProperty ;
+    rdfs:comment "When applied to a file, this ACL entry grants the right to execute the file in-memory. When Applied to a Directory, grants Traversal rights into the Directory"@en ;
+    rdfs:domain :default, user:Group, user:UserAccount ;
+    rdfs:label "grants execution by"@en ;
+    rdfs:range :ACLEntry ;
+    owl:inverseOf :grantsWriteTo .
+
+:isDefaultIn
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The Default entry in an ACL when no other entry can be applied to the resource requester"@en ;
+    rdfs:domain :ACL ;
+    rdfs:label "is Default Entry"@en ;
+    rdfs:range :DefaultEntry ;
+    rdfs:subPropertyOf :isEntryIn .
+
+:isEntryIn
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "This Entry is part of an overall list of access control rules, often meaning that it will be assessed in order relative to other entries in the list."@en ;
+    rdfs:domain :ACLEntry ;
+    rdfs:label "is member of access control list"@en ;
+    rdfs:range :ACL ;
+    rdfs:subPropertyOf mere:partOf ;
+    owl:inverseOf :hasEntryIn .
+
+:isRecursive
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "recursive ACL entries grant their permissions to all child objects of the listed object."@en ;
+    rdfs:domain :ACL ;
+    rdfs:label "is recursive"@en ;
+    rdfs:range xsd:boolean .
+

@@ -1,0 +1,154 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix nic: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic#> .
+@prefix log: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/log#> .
+@prefix filesystem: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+@prefix privilege: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/privilege#> .
+@prefix memory: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/memory#> .
+@prefix memoryartifacts: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/memoryartifacts#> .
+@prefix osplatform: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/osplatform#> .
+@prefix hardware: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware#> .
+@prefix dhcp: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/dhcp#> .
+@prefix email: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/email#> .
+@prefix acl: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl#> .
+@prefix dns: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/dns#> .
+@prefix oui: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix ipnet: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#> .
+@prefix registry: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/registry#> .
+@prefix mime: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime#> .
+@prefix uri: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri#> .
+@prefix software: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/software#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix host: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+@prefix metadata: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/metadata#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes annotationns and resources that map these ontologies into the TAPIO software."@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes annotationns and resources that map these ontologies into the TAPIO software."@en ;
+    rdfs:label "TAPIO support ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/authentication>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/controls>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/datastream>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/dhcp>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/dns>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/email>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/event>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystemartifacts>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/indicators>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/log>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/memory>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/memoryartifacts>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/metadata>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/osplatform>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/privilege>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/registry>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/software>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user> ;
+    owl:versionInfo "1.0" .
+
+:Agent
+    a owl:Class ;
+    rdfs:comment " "@en, "A TAPIO Agent instance"@en ;
+    rdfs:label "TAPIO Agent"@en .
+
+:AgentSnapshot
+    a owl:Class ;
+    rdfs:comment "A point-in-time snapshot image, in graph data format, from a single TAPIO Agent"@en ;
+    rdfs:label "Agent Snapshot"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:agentID
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The Unique ID for this TAPIO Agent."@en ;
+    rdfs:domain :Agent ;
+    rdfs:label "has Agent ID"@en ;
+    rdfs:range xsd:normalizedString .
+
+:dfirNote
+    a owl:AnnotationProperty ;
+    rdfs:comment "This annotation is used to document information about objects and relations that is of relevance to a DFIR analyst, and outside the scope of the usual comment annotation. (which should be used to describe what something is)"@en ;
+    rdfs:label "Note to Analyst"@en .
+
+:expiresAfter
+    a owl:AnnotationProperty ;
+    rdfs:comment "the time duration this information should be considered valid for"@en ;
+    rdfs:label "expires after"@en .
+
+:fromHostGraph
+    a owl:AnnotationProperty ;
+    rdfs:comment "Gives the Identity of the Host Graph this property reification subgraph belongs to"@en ;
+    rdfs:label "subgraph for Host Graph"@en .
+
+:generatedBy
+    a owl:AnnotationProperty ;
+    rdfs:comment "the TAPIO module that created this triple"@en ;
+    rdfs:label "was generated by module"@en .
+
+:generatedOn
+    a owl:AnnotationProperty ;
+    rdfs:comment "The timestamp this triple was recorded on"@en ;
+    rdfs:label "generated on"@en .
+
+:iconLarge
+    a owl:AnnotationProperty ;
+    rdfs:comment "location of the large-format icon to use for displaying this Class"@en ;
+    rdfs:label "large icon"@en .
+
+:iconSmall
+    a owl:AnnotationProperty ;
+    rdfs:label "location of the small-format icon to use for display this class"@en .
+
+:linkColor
+    a owl:AnnotationProperty ;
+    rdfs:comment "default color to draw this object property with"@en ;
+    rdfs:label "link color"@en .
+
+:linkStyle
+    a owl:AnnotationProperty ;
+    rdfs:comment "default style to draw this object property with"@en ;
+    rdfs:label "Link Style"@en ;
+    rdfs:range xsd:normalizedString .
+
+:recordedAt
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "when this node was first observed and added"@en ;
+    rdfs:domain :AgentSnapshot ;
+    rdfs:label "recorded during"@en ;
+    rdfs:range time:Interval .
+
+:recordedBy
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The TAPIO Agent this snapshot was recorded by."@en ;
+    rdfs:domain :AgentSnapshot ;
+    rdfs:label "recorded by"@en ;
+    rdfs:range :Agent ;
+    owl:inverseOf :recordedSnapshot .
+
+:recordedSnapshot
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Agent ;
+    rdfs:label "created snapshot"@en ;
+    rdfs:range :AgentSnapshot ;
+    owl:inverseOf :recordedBy .
+
+:runningOnHost
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "The Host this TAPIO agent is installed on"@en ;
+    rdfs:domain :Agent ;
+    rdfs:label "is running on host"@en ;
+    rdfs:range host:Host .
+
+:signature
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain owl:Class ;
+    rdfs:label "Signature for variable resolution"@en ;
+    rdfs:range xsd:string .
+
+:signaturePriority
+    a owl:DatatypeProperty ;
+    rdfs:comment "The signature priority is a literal associated with properties in each ontology. It helps assess similarity when trying to match graph fragments with nodes in the full graph"@en ;
+    rdfs:label "has signature priority"@en ;
+    rdfs:range xsd:positiveInteger .
+
+:usage
+    a owl:AnnotationProperty ;
+    rdfs:comment "Notes on usage within TAPIO"@en ;
+    rdfs:label "usage: "@en .
+

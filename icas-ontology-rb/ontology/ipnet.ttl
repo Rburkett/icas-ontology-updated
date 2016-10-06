@@ -1,0 +1,633 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix uri: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/uri#> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix nic: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic#> .
+@prefix oui: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/oui#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix authentication: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/authentication#> .
+@prefix hardware: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/hardware#> .
+@prefix datastream: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/datastream#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix dns: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/dns#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Describes IPv4 and v6 logical network topologies, addressesing and connections."@en ;
+    a owl:Ontology ;
+    rdfs:comment "Describes IPv4 and v6 logical network topologies, addressesing and connections."@en ;
+    rdfs:label "IP Networks Topology and Communications Ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/nic> ;
+    owl:versionInfo "1.0" .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#0.0.0.0>
+    :hasAddressValue "0"^^:ipv4address ;
+    a :Address, owl:NamedIndividual ;
+    rdfs:comment "The base address for the whole Internet"@en ;
+    rdfs:label "0.0.0.0" .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/ipnet#255.255.255.255>
+    :hasAddressValue "4294967295"^^:ipv4address ;
+    a :Address, owl:NamedIndividual ;
+    rdfs:comment "The Global Broadcast Address for the whole Internet"@end ;
+    rdfs:label "255.255.255.255"@en .
+
+:ARPConnection
+    a owl:Class ;
+    rdfs:comment "a ARP connection between two hosts"@en ;
+    rdfs:label "ARP Connection"@en ;
+    rdfs:subClassOf :Connection .
+
+:ARPRequest
+    a owl:Class ;
+    rdfs:comment "a ARP Request"@en ;
+    rdfs:label "ARP Request"@en ;
+    rdfs:subClassOf :ARPConnection .
+
+:ARPResponse
+    a owl:Class ;
+    rdfs:comment "a ARP response "@en ;
+    rdfs:label "ARP Response"@en ;
+    rdfs:subClassOf :ARPConnection .
+
+:Address
+    a owl:Class ;
+    rdfs:comment ""@en ;
+    rdfs:label "IP Address"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:CIFS
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Common Internet File System" ;
+    rdfs:label "CIFS" .
+
+:Connection
+    a owl:Class ;
+    rdfs:comment "a connection between two systems"@en ;
+    rdfs:label "Connection"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:ConnectionClosedEvent
+    a owl:Class ;
+    rdfs:comment "An event that marks the closing of a connection."@en ;
+    rdfs:label "Connection closing event"@en ;
+    rdfs:subClassOf event:Event .
+
+:ConnectionOpenedEvent
+    a owl:Class ;
+    rdfs:comment "An event that marks the opening of a connection."@en ;
+    rdfs:label "Connection opening event"@en ;
+    rdfs:subClassOf event:Event .
+
+:DCCP
+    :hasIPProtocolNumber 33 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Datagram Congestion Control Protocol"@en ;
+    rdfs:label "DCCP"@en .
+
+:DNS
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Domain Name System"@en ;
+    rdfs:label "DNS"@en .
+
+:DNSConnection
+    a owl:Class ;
+    rdfs:comment "a DNS connection"@en ;
+    rdfs:label "DNS Connection"@en ;
+    rdfs:subClassOf :IPConnection ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:hasValue :DNS ;
+        owl:onProperty :usingProtocol
+    ] .
+
+:DNSRequest
+    a owl:Class ;
+    rdfs:comment "a DNS request"@en ;
+    rdfs:label "DNS Request"@en ;
+    rdfs:subClassOf :DNSConnection .
+
+:DNSResponse
+    a owl:Class ;
+    rdfs:comment "a DNS response"@en ;
+    rdfs:label "DNS Request"@en ;
+    rdfs:subClassOf :DNSConnection .
+
+:FTP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "File Transfer Protocol"@en ;
+    rdfs:label "FTP"@en .
+
+:FTPConnection
+    a owl:Class ;
+    rdfs:comment "a FTP connection between two hosts"@en ;
+    rdfs:label "FTP Connection"@en ;
+    rdfs:subClassOf :TCPConnection ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:hasValue :FTP ;
+        owl:onProperty :usingProtocol
+    ] .
+
+:HTTP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Hyper Text Transfer Protocol"@en ;
+    rdfs:label "HTTP"@en .
+
+:HTTPConnection
+    a owl:Class ;
+    rdfs:comment "a HTTP connection between two hosts"@en ;
+    rdfs:label "HTTP Connection"@en ;
+    rdfs:subClassOf :TCPConnection ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:hasValue :HTTP ;
+        owl:onProperty :usingProtocol
+    ] .
+
+:HTTPRequest
+    a owl:Class ;
+    rdfs:comment "a HTTP connection between two hosts"@en ;
+    rdfs:label "HTTP Connection"@en ;
+    rdfs:subClassOf :HTTPConnection .
+
+:HTTPResponse
+    a owl:Class ;
+    rdfs:comment "a HTTP connection between two hosts"@en ;
+    rdfs:label "HTTP Connection"@en ;
+    rdfs:subClassOf :HTTPConnection .
+
+:HTTPS
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Hyper Text Transfer Protocol Secured"@en ;
+    rdfs:label "HTTPS"@en .
+
+:HTTPSConnection
+    a owl:Class ;
+    rdfs:comment "a HTTPS connection between two hosts"@en ;
+    rdfs:label "HTTPS Connection"@en ;
+    rdfs:subClassOf :HTTPConnection ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:hasValue :HTTPS ;
+        owl:onProperty :usingProtocol
+    ] .
+
+:ICMP
+    :hasIPProtocolNumber 1 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Internet Control Message Protocol"@en ;
+    rdfs:label "ICMP"@en .
+
+:IGMP
+    :hasIPProtocolNumber 2 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Internet Group Management Protocol"@en ;
+    rdfs:label "IGMP"@en .
+
+:IMAP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Internet Mail Access Protocol"@en ;
+    rdfs:label "IMAP"@en .
+
+:IPConnection
+    a owl:Class ;
+    rdfs:comment "an IP connection between two hosts"@en ;
+    rdfs:label "IP Connection"@en ;
+    rdfs:subClassOf :Connection .
+
+:IPP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Internet Printing Protocol"@en ;
+    rdfs:label "IPP"@en .
+
+:IPv4
+    :hasIPProtocolNumber 4 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "IPEncap version 4"@en ;
+    rdfs:label "IPEncap version 4"@en .
+
+:IPv6
+    :hasIPProtocolNumber 41 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "IPEncap version 4"@en ;
+    rdfs:label "IPEncap version 4"@en .
+
+:Layer4
+    a owl:Class ;
+    rdfs:comment "Layer 4 Protocol"@en ;
+    rdfs:label "Transport Layer Protocol" ;
+    rdfs:subClassOf :Protocol .
+
+:Layer4Connection
+    a owl:Class ;
+    rdfs:comment "a stream connection between two hosts"@en ;
+    rdfs:label "Layer 4 Connection"@en ;
+    rdfs:subClassOf :IPConnection .
+
+:Layer7
+    a owl:Class ;
+    rdfs:comment "Application Protocol"@en ;
+    rdfs:label "Application Layer Protocol"@en ;
+    rdfs:subClassOf :Protocol .
+
+:NTP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Network Time Protocol"@en ;
+    rdfs:label "NTP"@en .
+
+:NameResolution
+    a owl:Class ;
+    rdfs:comment "A request to a third-party service to resolve a network name into a network address, usually for purposes of determining the destination endpoint for a connection."@en ;
+    rdfs:label "Name Resolution Request"@en ;
+    rdfs:subClassOf event:Event .
+
+:POP3
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Post Office Protocol v3"@en ;
+    rdfs:label "POP3"@en .
+
+:Protocol
+    a owl:Class ;
+    rdfs:comment "Communication Protocol"@en ;
+    rdfs:label "Communication Protocol" ;
+    rdfs:subClassOf owl:Thing .
+
+:RDP
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Remote Desktop Protocol"@en ;
+    rdfs:label "RDP"@en .
+
+:RSVP
+    :hasIPProtocolNumber 46 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Resource Reservation Protocol"@en ;
+    rdfs:label "RSVP"@en .
+
+:RSYNC
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Remote Sync Protocol"@en ;
+    rdfs:label "RSYNC"@en .
+
+:Route
+    a owl:Class ;
+    rdfs:comment "a route entry, specifying a destination network and gateway to it."@en ;
+    rdfs:label "Route"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:SCTP
+    :hasIPProtocolNumber 132 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Stream Control Transmission Protocol"@en ;
+    rdfs:label "SCTP"@en .
+
+:SSH
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Secure Shell Protocol"@en ;
+    rdfs:label "SSH"@en .
+
+:SSHConnection
+    a owl:Class ;
+    rdfs:comment "a SSH connection between two hosts"@en ;
+    rdfs:label "SSH Connection"@en ;
+    rdfs:subClassOf :TCPConnection ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:hasValue :SSH ;
+        owl:onProperty :usingProtocol
+    ] .
+
+:SubNet
+    a owl:Class ;
+    rdfs:comment "a subnet of the global address space"@en ;
+    rdfs:label "Subnet"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:TCP
+    :hasIPProtocolNumber 6 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:label "TCP"@en, "Transmission Control Protocol"@en .
+
+:TCPConnection
+    a owl:Class ;
+    rdfs:comment "a TCP connection between two hosts"@en ;
+    rdfs:label "TCP Connection"@en ;
+    rdfs:subClassOf :Layer4Connection .
+
+:Telnet
+    a :Layer7, owl:NamedIndividual ;
+    rdfs:comment "Telnet Protocol"@en ;
+    rdfs:label "Telnet"@en .
+
+:UDP
+    :hasIPProtocolNumber 17 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "User Datagram Protocol"@en ;
+    rdfs:label "UDP"@en .
+
+:UDPConnection
+    a owl:Class ;
+    rdfs:comment "a UDP connection between two hosts"@en ;
+    rdfs:label "UDP Connection"@en ;
+    rdfs:subClassOf :Layer4Connection .
+
+:boundToNIC
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Address ;
+    rdfs:label "is bound to network interface"@en ;
+    rdfs:range nic:NIC ;
+    owl:inverseOf nic:hasIPaddress .
+
+:connectedViaAddress
+    a owl:ObjectProperty ;
+    rdfs:domain :IPConnection ;
+    rdfs:range :Address ;
+    owl:inverseOf :createdConnection .
+
+:connectedViaSocket
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Connection ;
+    rdfs:label "is connected via socket"@en ;
+    rdfs:range process:Socket ;
+    owl:inverseOf :createdConnection .
+
+:connectionClosed
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "linking to the event by which that marks the closing of this connection "@en ;
+    rdfs:domain :Connection ;
+    rdfs:label "was closed by"@en ;
+    rdfs:range :ConnectionClosedEvent ;
+    rdfs:subPropertyOf event:product .
+
+:connectionOpened
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "linking to the event by which that marks the opening of this connection "@en ;
+    rdfs:domain :Connection ;
+    rdfs:label "was opened by"@en ;
+    rdfs:range :ConnectionOpenedEvent ;
+    rdfs:subPropertyOf event:product .
+
+:createdConnection
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "a socket links a process to a specific network connection - either outbound or inbound."@en ;
+    rdfs:domain :Address, process:Socket ;
+    rdfs:label "created connection"@en ;
+    rdfs:range :Connection .
+
+:datastreamElements
+    a owl:ObjectProperty ;
+    rdfs:comment "The set of datastream elements associated with this connection"@en ;
+    rdfs:domain :Layer4Connection ;
+    rdfs:label "Datastream Elements"@en ;
+    rdfs:range datastream:Content, datastream:Request, datastream:Response, :NameResolution .
+
+:hasAddressValue
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Address ;
+    rdfs:range :ipv4address .
+
+:hasBroadcastAddress
+    a owl:FunctionalProperty, owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "traffic sent to the broadcast address of a subnet will be transmitted to all hosts on the same subnet."@en ;
+    rdfs:domain :SubNet ;
+    rdfs:label "has broadcast address"@en ;
+    rdfs:range :Address .
+
+:hasDefaultGateway
+    a owl:FunctionalProperty, owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the IP address on the subnet that is attached to the hardware address that all packets with an unknown local routing gateway, should be addressed to."@en ;
+    rdfs:domain :SubNet ;
+    rdfs:label "has default gateway"@en ;
+    rdfs:range :Address .
+
+:hasDestination
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "for session-based protocols this is the address of the system the connection was opened with (usually considered the 'server' side of the connection). For sessionless protocols this is the address the packets are sent to. "@en ;
+    rdfs:domain :IPConnection ;
+    rdfs:label "has destination address"@en ;
+    rdfs:range :Address .
+
+:hasDestinationPort
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain datastream:Packet, :Layer4Connection ;
+    rdfs:label "has destination port"@en ;
+    rdfs:range xsd:unsignedShort .
+
+:hasIPProtocolNumber
+    a owl:DatatypeProperty ;
+    rdfs:comment "the IP protocol number for the this transport layer protocol as defined by by the Internet Assigned Numbers Authority (IANA)"@en ;
+    rdfs:domain :Layer4 ;
+    rdfs:label "has IP protocol number"@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+:hasNetMask
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :SubNet ;
+    rdfs:label "has Netmask"@en ;
+    rdfs:range xsd:unsignedShort .
+
+:hasNetworkAddress
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :SubNet ;
+    rdfs:range :Address .
+
+:hasProtocolVersion
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "HTTP protocol version"@en ;
+    rdfs:domain :Protocol ;
+    rdfs:label "has protocol version"@en ;
+    rdfs:range xsd:normalizedString .
+
+:hasResponseCode
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the code on this HTTP response "@en ;
+    rdfs:domain :HTTPResponse ;
+    rdfs:label "has response code"@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+:hasRoute
+    a owl:ObjectProperty ;
+    rdfs:comment "this address has an additional route attached to it, for specific subnet destinations not reachable via the default gateway"@en ;
+    rdfs:domain :Address ;
+    rdfs:label "has route"@en ;
+    rdfs:range :Route .
+
+:hasSource
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "for session-based protocols this is the address of the system the connection was pened from (usually considered the 'client' side of the connection). For sessionless protocols this is the address the packets were sent from. "@en ;
+    rdfs:domain :IPConnection ;
+    rdfs:label "has source address"@en ;
+    rdfs:range :Address .
+
+:hasSourcePort
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain datastream:Packet, :Layer4Connection ;
+    rdfs:label "has source port"@en ;
+    rdfs:range xsd:unsignedShort .
+
+:hasState
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the state of the TCP connection"@en ;
+    rdfs:domain :TCPConnection ;
+    rdfs:label "has connection state"@en ;
+    rdfs:range :tcpConnectionState .
+
+:hasSubnet
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :SubNet ;
+    rdfs:label "has subnet"@en ;
+    rdfs:range :SubNet ;
+    rdfs:subPropertyOf mere:directlyHasPart .
+
+:hasUserAgent
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "browser type  running on the source host of the HTTP connection"@en ;
+    rdfs:domain :HTTPConnection ;
+    rdfs:label "has user agent"@en ;
+    rdfs:range xsd:normalizedString .
+
+:httpMethod
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:oneOf ("GET"^^xsd:string
+            "HEAD"^^xsd:string
+            "CHECKOUT"^^xsd:string
+            "SHOWMETHOD"^^xsd:string
+            "PUT"^^xsd:string
+            "DELETE"^^xsd:string
+            "POST"^^xsd:string
+            "LINK"^^xsd:string
+            "UNLINK"^^xsd:string
+            "CHECKIN"^^xsd:string
+            "TEXTSEARCH"^^xsd:string
+            "SPACEJUMP"^^xsd:string
+            "SEARCH"^^xsd:string
+        )
+    ] .
+
+:ipv4address
+    tapio:signaturePriority 1 ;
+    a rdfs:Datatype ;
+    rdfs:comment "IPv4 Addresses are 32 bit unsigned integers, string representations are only for easy of reading by humans"@en ;
+    rdfs:label "32-bit IP version 4 address value"@en .
+
+:ipv6address
+    tapio:signaturePriority 1 ;
+    a rdfs:Datatype ;
+    rdfs:comment "IPv6 Addresses are 128 bit unsigned integers, string representations are only for easy of reading by humans"@en ;
+    rdfs:label "128-bit IP version 6 address value"@en .
+
+:linkedIPAddress
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the IP Address that the ARP query is resolving"@en ;
+    rdfs:domain :ARPConnection ;
+    rdfs:label "links to IP address"@en ;
+    rdfs:range :Address .
+
+:linkedMACAddress
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the MAC Address that the ARP query is resolving"@en ;
+    rdfs:domain :ARPConnection ;
+    rdfs:label "links to MAC Address"@en ;
+    rdfs:range nic:NIC .
+
+:madeResolverQuery
+    a owl:ObjectProperty ;
+    rdfs:domain :Address ;
+    rdfs:label "made query to resolve address"@en ;
+    rdfs:range dns:Query .
+
+:manet
+    :hasIPProtocolNumber 138 ;
+    a :Layer4, owl:NamedIndividual ;
+    rdfs:comment "Mobile Ad Hoc Networking Protocol"@en ;
+    rdfs:label "Manet"@en .
+
+:onSubnet
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the subnet this IP address or network is derived from."@en ;
+    rdfs:domain :Address ;
+    rdfs:label "on subnet"@en ;
+    rdfs:range :SubNet ;
+    owl:inverseOf :hasSubnet .
+
+:requestsURI
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the URI requested in the HTTP request"@en ;
+    rdfs:domain :HTTPRequest ;
+    rdfs:label "requested URI"@en ;
+    rdfs:range uri:URI .
+
+:resolvesQuery
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the specific DNS query that this connection is attempting to resolve."@en ;
+    rdfs:domain :DNSConnection ;
+    rdfs:label "dns query"@en ;
+    rdfs:range dns:Query .
+
+:routesTo
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Route ;
+    rdfs:label "routes to"@en ;
+    rdfs:range :SubNet .
+
+:tcpConnectionState
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:oneOf ("SYN_SEND"^^xsd:string
+            "SYN_RECEIVED"^^xsd:string
+            "ESTABLISHED"^^xsd:string
+            "LISTEN"^^xsd:string
+            "FIN_WAIT_1"^^xsd:string
+            "TIMED_WAIT"^^xsd:string
+            "CLOSE_WAIT"^^xsd:string
+            "FIN_WAIT_2"^^xsd:string
+            "LAST_ACK"^^xsd:string
+            "CLOSED"^^xsd:string
+        )
+    ] .
+
+:usesMethod
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the HTTP method"@en ;
+    rdfs:domain :HTTPConnection ;
+    rdfs:label "uses HTTP method"@en ;
+    rdfs:range :httpMethod .
+
+:usingGateway
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Route ;
+    rdfs:label "using Gateway"@en ;
+    rdfs:range :Address .
+
+:usingProtocol
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the specific application protocol being created over this connection. This may default to being identified by standard port number, if not identified from packet inspection."@en ;
+    rdfs:domain datastream:Packet, :Layer7Connection ;
+    rdfs:label "using application protocol"@en ;
+    rdfs:range :Layer7 .
+
+:usingTransport
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain datastream:Packet, :Layer4Connection, process:Socket ;
+    rdfs:label "over transport protocol"@en ;
+    rdfs:range :Layer4 .
+
+[]
+    a owl:AllDisjointClasses ;
+    owl:members (:TCPConnection
+        :UDPConnection
+    ) .
+

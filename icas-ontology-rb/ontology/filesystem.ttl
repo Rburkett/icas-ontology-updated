@@ -1,0 +1,359 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix dc: <http://purl.org/dc/elements/1.1/#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2: <http://www.w3.org/2006/12/owl2#> .
+@prefix swrlx: <http://www.w3.org/2003/11/swrlx#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mere: <http://www.bbn.com/ontologies/domain/foundation/mereology#> .
+@prefix tapio: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/tapio#> .
+@prefix user: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user#> .
+@prefix filesystemartifacts: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystemartifacts#> .
+@prefix mime: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime#> .
+@prefix acl: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl#> .
+@prefix process: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process#> .
+@prefix host: <https://github.com/Rburkett/icas-ontology/edit/master/ontology/host#> .
+@prefix : <https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem#> .
+
+<https://github.com/Rburkett/icas-ontology/edit/master/ontology/filesystem>
+    dc:creator "Invincea Labs"@en ;
+    dc:date "2014" ;
+    dc:description "Ontology describing the structure, content and metadata of a filesystem"@en ;
+    a owl:Ontology ;
+    rdfs:comment "Ontology describing the structure, content and metadata of a filesystem"@en ;
+    rdfs:label "Filesystem Ontology"@en ;
+    owl:imports <https://github.com/Rburkett/icas-ontology/edit/master/ontology/acl>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/mime>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/process>, <https://github.com/Rburkett/icas-ontology/edit/master/ontology/user> ;
+    owl:versionInfo "1.0" .
+
+:BTRFS
+    a owl:Class ;
+    rdfs:label "BtrFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:DirLink
+    a owl:Class ;
+    rdfs:comment "This Directory is actually a redirect to the contents of another, actual Directory on the filesystem"@en ;
+    rdfs:label "Symbolic Directory Link" ;
+    rdfs:subClassOf :Directory .
+
+:Directory
+    a owl:Class ;
+    rdfs:comment "a standard filesystem Directory (aka Folder) on a filesystem."@en ;
+    rdfs:label "Directory"@en ;
+    rdfs:subClassOf mere:Composite, :Path .
+
+:EXTFS
+    a owl:Class ;
+    rdfs:label "ExtFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:FAT
+    a owl:Class ;
+    rdfs:label "FAT Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:FFS
+    a owl:Class ;
+    rdfs:label "FFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:File
+    a owl:Class ;
+    rdfs:comment "A single data file and its content, distinct from its location and identification on any particular filesystem"@en ;
+    rdfs:label "File Content"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:FileHash
+    a owl:Class ;
+    rdfs:comment "A value that uniquely identifies the exact data content of a file, commonly used to demonstrate identity or anti-tampering"@en ;
+    rdfs:label "A Cryptographic Hash Value"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:FileName
+    a owl:Class ;
+    rdfs:comment "this is a file's location within the filesystem. Some filesystems allow a single file to exist in multiple places within the filesystem. Additionally, there may be duplicates of the same data present until multiple names"@en ;
+    rdfs:label "File"@en ;
+    rdfs:subClassOf :Path .
+
+:HFS
+    a owl:Class ;
+    rdfs:label "HFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:HardLink
+    a owl:Class ;
+    rdfs:label "Hard Link"@en ;
+    rdfs:subClassOf :Link ;
+    owl:disjointWith :SymLink .
+
+:JFFS
+    a owl:Class ;
+    rdfs:label "JFFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:Link
+    a owl:Class ;
+    rdfs:comment "This filename is a link to content that exists under another filename on the filesystem"@en ;
+    rdfs:label "Symbolic Link"@en ;
+    rdfs:subClassOf :FileName .
+
+:NTFS
+    a owl:Class ;
+    rdfs:label "NTFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:Path
+    a owl:Class ;
+    rdfs:comment "An individual component of a fully formed filesystem path"@en ;
+    rdfs:label "Path"@en ;
+    rdfs:subClassOf owl:Thing .
+
+:SymLink
+    a owl:Class ;
+    rdfs:comment "Symbolic Links are filesystem entries that contain no information, they only direct access to the file or directory to the actual path something else within the filesystem"@en ;
+    rdfs:label "Symbolic Link"@en ;
+    rdfs:subClassOf :Link ;
+    owl:disjointWith :HardLink .
+
+:UDF
+    a owl:Class ;
+    rdfs:label "UDF Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:UFS
+    a owl:Class ;
+    rdfs:label "UFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:UncDirectory
+    a owl:Class ;
+    rdfs:comment "a windows-style UNC directory location"@en ;
+    rdfs:label "UNC Directory"@en ;
+    rdfs:subClassOf :Directory .
+
+:VFS
+    a owl:Class ;
+    rdfs:comment "Typically, every operating system host will have a single virtual filesystem, where all physical and network filesystem volumes are connected under. "@en ;
+    rdfs:label "Virtual Filesystem"@en ;
+    rdfs:subClassOf :Volume .
+
+:Volume
+    a owl:Class ;
+    rdfs:comment "a self-contained filesystem volume. May be mounted within a VFS by an operating system and accessed via a subdirectory."@en ;
+    rdfs:label "Filesystem Volume"@en ;
+    rdfs:subClassOf mere:Composite, owl:Thing .
+
+:XFS
+    a owl:Class ;
+    rdfs:label "XFS Filesystem Volume"@en ;
+    rdfs:subClassOf :Volume .
+
+:createdByAccount
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the credentials that created this filesystem object"@en ;
+    rdfs:domain :Directory, :FileName ;
+    rdfs:label "was created by"@en ;
+    rdfs:range user:UserAccount .
+
+:createdOn
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Directory, :File ;
+    rdfs:label "created on"@en ;
+    rdfs:range xsd:dateTimeStamp .
+
+:executingAs
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this file is currently executing in memory as a process or shared library"@de ;
+    rdfs:domain :File ;
+    rdfs:label "is currently executing as process"@en ;
+    rdfs:range process:Process ;
+    owl:inverseOf process:fromExecutable .
+
+:fileSize
+    a rdfs:Datatype ;
+    rdfs:label "a data files total size as a number of bytes"@en .
+
+:filesystemID
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "A unique ID string that should be globally unique for this Filesystem"@en ;
+    rdfs:domain :Volume ;
+    rdfs:label "Filesystem ID String"@en ;
+    rdfs:range xsd:normalizedString .
+
+:fromHashAlg
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "the hashing algorithm used to generate this hash value"@en ;
+    rdfs:domain :FileHash ;
+    rdfs:label "generated with hash algorithm"@en ;
+    rdfs:range xsd:normalizedString .
+
+:fsName
+    a rdfs:Datatype ;
+    rdfs:comment "What is a valid filename will vary dependant upon the enclosing filesystem"@en ;
+    rdfs:label "a filesystem-valid name"@en .
+
+:hasContent
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "the actual data this filename entry refers to the on the filesystem"@en ;
+    rdfs:domain :FileName ;
+    rdfs:label "has content"@en ;
+    rdfs:range :File ;
+    owl:inverseOf :inFileName .
+
+:hasFile
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "indicates that this file is present in the linked directory"@en ;
+    rdfs:domain :Directory ;
+    rdfs:label "contains file"@en ;
+    rdfs:range :FileName ;
+    rdfs:subPropertyOf mere:directlyHasPart .
+
+:hasFileHash
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this files content has been cryptographically hashed to produce the following hash identity string"@en ;
+    rdfs:domain :File ;
+    rdfs:label "has hash value"@en ;
+    rdfs:range :FileHash ;
+    owl:inverseOf :matchesFile .
+
+:hasHashValue
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The string representation of this has value - should be used in the format most commonly associated with that hash algorithm"@en ;
+    rdfs:domain :FileHash ;
+    rdfs:label "Hash Value String"@en ;
+    rdfs:range xsd:normalizedString .
+
+:hasMetadata
+    a owl:ObjectProperty ;
+    rdfs:comment "This metadata is associated with this filesystem metadata"@en ;
+    rdfs:domain :File, :Path, :Volume ;
+    rdfs:label "fileystem metadata"@en ;
+    rdfs:range filesystemartifacts:MetaData .
+
+:hasName
+    tapio:signaturePriority 1 ;
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The name of the file or directory"@en ;
+    rdfs:domain :Directory, :FileName ;
+    rdfs:label "Name"@en ;
+    rdfs:range :fsName .
+
+:hasRootDirectory
+    a owl:FunctionalProperty, owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "Indicates the top-level (root) directory on an individual filesystem. All common filesystems have a single root directory, with all other directories being subdirectories of that root."@en ;
+    rdfs:domain :Volume ;
+    rdfs:label "has Root Directory"@en ;
+    rdfs:range :Directory ;
+    rdfs:subPropertyOf mere:partOf .
+
+:hasSize
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:comment "The size of the file's content, in bytes. "@en ;
+    rdfs:domain :File ;
+    rdfs:label "size in bytes"@en ;
+    rdfs:range xsd:positiveInteger .
+
+:hasSubDirectory
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "Links to sub-directories of this directory entry"@en ;
+    rdfs:domain :Directory ;
+    rdfs:label "contains sub-directory"@en ;
+    rdfs:range :Directory ;
+    rdfs:subPropertyOf mere:directlyHasPart ;
+    owl:inverseOf :isSubDirectory .
+
+:hasType
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "a registered MIME type describing the format of the data contained within this file,"@en ;
+    rdfs:domain :File ;
+    rdfs:label "has MIME Type"@en ;
+    rdfs:range mime:MIMEtype .
+
+:inDirectory
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :FileName, :Link ;
+    rdfs:label "is In Directory"@en ;
+    rdfs:range :Directory ;
+    rdfs:subPropertyOf mere:directlyPartOf ;
+    owl:inverseOf :hasFile .
+
+:inFileName
+    a owl:ObjectProperty ;
+    rdfs:comment "this file content is reachable at this filename node in a filesystem"@en ;
+    rdfs:domain :File ;
+    rdfs:label "reachable at FileName"@en ;
+    rdfs:range :FileName ;
+    owl:inverseOf :hasContent .
+
+:inProcess
+    a owl:ObjectProperty ;
+    rdfs:comment "this file is being accessed by the listed process"@en ;
+    rdfs:domain :FileName ;
+    rdfs:label "is loaded by process"@en ;
+    rdfs:range process:Process .
+
+:isFilesystemRootOn
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "This directory is a top-level entrypoint for the hosts local abstraction of filesystems and storage - the left-most point for any absolute path name involving storage accessible for this system."@en ;
+    rdfs:domain :Directory ;
+    rdfs:label "is a root filesystem directory for"@en ;
+    rdfs:range host:Host ;
+    owl:inverseOf host:hasFileSystemRoot .
+
+:isSubDirectory
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Directory ;
+    rdfs:label "is sub-directory of"@en ;
+    rdfs:range :Directory ;
+    rdfs:subPropertyOf mere:directlyPartOf ;
+    owl:inverseOf :hasSubDirectory .
+
+:lastAccessedOn
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Directory, :File ;
+    rdfs:range xsd:dateTimeStamp .
+
+:lastModifiedOn
+    a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain :Directory, :File ;
+    rdfs:range xsd:dateTimeStamp .
+
+:matchesFile
+    a owl:InverseFunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this hash value matches the content of the linked file's data"@en ;
+    rdfs:domain :FileHash ;
+    rdfs:label "matches file"@en ;
+    rdfs:range :File ;
+    owl:inverseOf :hasFileHash .
+
+:mountedOn
+    a owl:ObjectProperty ;
+    rdfs:comment "this filesystem volume has its root directory mounted under the named filesystem directory location"@en ;
+    rdfs:domain :Volume ;
+    rdfs:label "is mounted in directory"@en ;
+    rdfs:range :Directory .
+
+:mountedVolume
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:comment "this directory is used as the mountpoint directory for another filesystems and points to its root directory"@en ;
+    rdfs:domain :Directory ;
+    rdfs:label "is mountpoint for"@en ;
+    rdfs:range :Volume ;
+    owl:inverseOf :mountedOn .
+
+:ownedByAccount
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Directory, :FileName ;
+    rdfs:label "is owned by"@en ;
+    rdfs:range user:UserAccount .
+
+:ownedByGroup
+    a owl:FunctionalProperty, owl:ObjectProperty ;
+    rdfs:domain :Directory, :FileName ;
+    rdfs:label "is owned by"@en ;
+    rdfs:range user:Group .
+
